@@ -1,0 +1,182 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, scale-initial-scale 1.0">
+        <title>Calculator</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/12.4.2/math.min.js"></script>
+    </head>
+        <body class="body">
+            <div class="headerContainer">
+            <h1 class="header">My first calculator</h1>
+            </div>
+        <div class="container">
+            <div class="mainCont">
+            <div class="valuebar" id="TextBar">
+             <textarea class="textarea1" id="textarea" readonly placeholder="0"></textarea>
+             </div>
+           
+
+          <div class="grid">
+           <button type="button" class="clearButton" >C</button>
+             <button type="button" class="charButton" >.</button>
+             <button type="button" class="oprButton" >%</button>
+             <button type="button" class="oprButton">/</button>
+           <button type="button" class="charButton">7</button>
+             <button type="button" class="charButton">8</button>
+             <button type="button" class="charButton">9</button>
+             <button type="button" class="oprButton">*</button>
+            <button type="button"class="charButton" >4</button>
+             <button type="button" class="charButton">5</button>
+             <button type="button" class="charButton">6</button>
+             <button type="button" class="oprButton">-</button>
+             <button type="button" class="charButton">1</button>
+             <button type="button" class="charButton">2</button>
+             <button type="button" class="charButton">3</button>
+             <button type="button" class="oprButton">+</button>
+             <button type="button" class="charButton" style="color:rgb(143, 52, 116)">(</button>
+             <button class="zeroButton charButton" type="button" >0</button>
+             <button class="equalButton" type="submit" >=</button>
+             <button type="button" class="charButton" style="color:rgb(143, 52, 116)">)</button>
+             
+             
+             
+             
+
+
+          </div>
+          </div>
+        </div>
+        <style>
+           .textarea1{
+            width:165px;
+            height: 60px;
+            resize: none;
+            font-size: xx-large;
+           }
+
+            .headerContainer{
+                 
+                  justify-items: center; align-content: center; 
+            }
+
+            .header{
+                border-radius: 10px;
+                background-color: rgb(121, 174, 221);
+                height: 100px;
+                 justify-items: center; align-content: center;
+
+            }
+            .container{
+               
+                height:350px;
+                
+                justify-items: center;
+            
+                }
+            .mainCont{
+                    border-radius: 5%;
+                    background-color:rgb(157, 245, 245);
+                height:350px;
+                width:300px;
+                align-content: center;
+                justify-items: center;
+                }
+            .equalButton{
+                color:blue;
+                 width:1.1cm;
+                 height: 1.1cm;
+
+            }
+            .clearButton{
+                 color:red;
+                 width:1.1cm;
+                 height: 1.1cm;
+
+            }
+            .charButton {
+                
+                 width:1.1cm;
+                 height: 1.1cm;
+
+            }
+            .oprButton{
+               color:green;
+                 width:1.1cm;
+                 height: 1.1cm;
+
+            }
+           .grid{
+            height:200px;
+            width: 200px;
+             display:grid;
+             max-width: fit-content;
+             grid-template-columns: repeat(4,1fr);
+             column-gap: 2px;
+             font-size: larger;
+             
+             
+           }
+          
+        </style>
+        <script>
+            const TextArea = document.getElementById("textarea");
+            const Buttons= document.querySelectorAll(".charButton");
+            
+            const operators= document.querySelectorAll(".oprButton");
+            const ResButton= document.querySelector(".equalButton");
+            const Backspace= document.querySelector(".clearButton");
+            
+        for(const operator of operators){
+            operator.addEventListener("click", function(){
+                const opr= this.textContent;
+                oprlist= ['+','-','*','%','/'];
+                const lastchar= TextArea.value.slice(-1);
+                const lastchartrue= oprlist.includes(lastchar);
+                if(lastchartrue){
+                    TextArea.value= TextArea.value.slice(0,-1)+opr;
+                }
+                else{
+                    TextArea.value+=opr;
+                }
+            });
+        }
+            
+            
+            
+            for (const Button of Buttons){
+
+            Button.addEventListener("click", function(){
+                const ButtonText= this.textContent;
+                if(TextArea.value==0){
+                    TextArea.value= ButtonText;
+                }
+                 
+                    else{
+               TextArea.value +=ButtonText;
+                }
+            });
+        }
+
+
+         ResButton.addEventListener("click", function(){
+            try{
+                const Result= math.evaluate(TextArea.value);
+                TextArea.value= Result;
+            }
+            catch(error){
+                TextArea.value= "Error:Invalid Expression";
+
+            } });
+
+            Backspace.addEventListener("click", function(){
+                let text= TextArea.value;
+                if(text!=0){
+                    TextArea.value= text.slice(0,-1);
+                }
+            })
+        </script>
+        </body>
+    
+</html>
